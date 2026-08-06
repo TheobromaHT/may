@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Noto Serif KR';
+  src: url('fonts/NotoSerifKR-Variable.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: block;
+}
