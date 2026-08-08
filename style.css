@@ -63,6 +63,10 @@
   .staff-profile-head{grid-template-columns:110px 1fr;gap:22px;padding-bottom:34px}
   .staff-profile-head .profile-photo{min-height:150px}
   .staff-profile-head h1{font-size:clamp(30px,9vw,42px);margin:10px 0 16px}
+
+/* Improved readability for navigation, labels, and supporting copy. */
+.brand-name{font-size:19px}.brand-sub{font-size:12px}.desktop-nav a,.header-cta,footer a,.text-link{font-size:18px}.eyebrow,.section-label,.chapter-kicker{font-size:16px}.hero-bottom,.reservation-intro,.card-label,.sub-nav{font-size:15px}.field small{font-size:14px}.reserve-button{font-size:16px}.journal-list span,.journal-list time{font-size:15px}footer p{font-size:14px}footer>div a{font-size:15px}.content-placeholder{font-size:14px}.directory-grid>a>span,.system-grid article>span{font-size:15px}.quick-links a{font-size:16px}.hero-copy,.intro-copy>p,.lore-grid p,.chapter div>p:last-child,.notice-list div>p:last-child,.contact-panel>p:not(.section-label),.directory-grid p{font-size:17px}
+@media(min-width:761px){.hero h1,.intro-copy h2,.visit-section h2,.sub-hero h1{font-size:clamp(56px,7.2vw,104px)}.card-title{font-size:42px}.chapter h2,.rules-panel h2,.notice-list h2,.contact-panel h2{font-size:45px}.directory-grid h2{font-size:28px}}
   .staff-profile-head .content-placeholder{min-height:88px}
   .staff-system-heading{display:block}
   .staff-system-heading h2{margin-top:9px}
