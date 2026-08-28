@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>로그인 | THEOBROMA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+KR:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="member-login-page">
+  <div class="page-noise"></div>
+  <main class="member-login-screen">
+    <a class="brand member-login-brand" href="index.html"><span class="brand-mark">T</span><span class="brand-name">THEOBROMA</span><span class="brand-sub">GRAND HOTEL</span></a>
+    <section class="member-login-card" aria-labelledby="login-title">
+      <p class="chapter-kicker">THEOBROMA / MEMBER ACCESS</p>
+      <h1 id="login-title">멤버 로그인</h1>
+      <p>직원 로비와 같은 개인 비밀번호로 멤버 공간에 로그인할 수 있습니다.</p>
+      <form id="member-login-form">
+        <label for="member-password">비밀번호</label>
+        <input id="member-password" name="password" type="password" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus>
+        <small>영문 알파벳과 숫자만 입력할 수 있습니다.</small>
+        <p id="member-login-error" aria-live="polite"></p>
+        <button type="submit">로그인 <span>↗</span></button>
+      </form>
+      <a href="index.html">메인으로 돌아가기</a>
+    </section>
+  </main>
+  <script src="login.js"></script>
+</body>
+</html>

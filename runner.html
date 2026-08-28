@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHARACTER SELECT & PROFILE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a191e; --panel-bg: rgba(27, 25, 31, 0.95); --inner-bg: rgba(15, 14, 18, 0.7);
+            --gold-main: #d4b26f; --gold-light: #f7e0a3; --gold-dark: #8c703b;
+            --text-main: #f0f0f0; --text-sub: #a0a0b0;
+            --font-main: 'Pretendard', 'Malgun Gothic', sans-serif; --font-serif: 'Cinzel', 'Noto Serif KR', serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --point-color: #ffb703;
+            --highlight-bg: rgba(212, 178, 111, 0.25);
+        }
+
+        body { font-family: var(--font-main); background: radial-gradient(circle at center, #232128 0%, #0f0e12 100%); color: var(--text-main); margin: 0; padding: 40px 20px; display: flex; justify-content: center; min-height: 100vh; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        .game-container { width: 100%; max-width: 1200px; background: var(--panel-bg); border: 1px solid var(--gold-dark); border-radius: 16px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); box-sizing: border-box; }
+        .view-title { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 28px; letter-spacing: 4px; margin-top: 0; margin-bottom: 40px; text-shadow: 0 0 15px rgba(212,178,111,0.3); }
+        .view-title::after { content: ''; display: block; width: 60px; height: 1px; background: var(--gold-main); margin: 15px auto 0; box-shadow: 0 0 8px var(--gold-light); }
+        .btn-gold { background: transparent; color: var(--gold-light); border: 1px solid var(--gold-dark); padding: 8px 20px; font-family: var(--font-serif); font-size: 13px; letter-spacing: 2px; cursor: pointer; border-radius: 4px; transition: var(--transition); }
+        .btn-gold:hover { background: var(--gold-dark); color: #fff; box-shadow: 0 0 12px rgba(212,178,111,0.4); }
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 25px; justify-items: center; }
+        .grid-divider { grid-column: 1 / -1; display: flex; align-items: center; text-align: center; color: var(--gold-light); font-family: var(--font-serif); letter-spacing: 4px; font-size: 15px; font-weight: 700; margin: 35px 0 15px 0; width: 100%; user-select: none; }
+        .grid-divider::before, .grid-divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--gold-dark); box-shadow: 0 0 8px rgba(212, 178, 111, 0.5); }
+        .grid-divider::before { margin-right: 25px; }
+        .grid-divider::after { margin-left: 25px; }
+        .char-grid > .grid-divider:first-child { margin-top: 0; }
+        .char-card { width: 100%; max-width: 220px; aspect-ratio: 2 / 3; background: #111014; border: 2px solid var(--gold-dark); border-radius: 12px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .char-card:hover { border-color: var(--gold-light); box-shadow: 0 15px 30px rgba(212,178,111,0.3); transform: translateY(-8px); }
+        .char-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; transition: var(--transition); }
+        .char-card:hover img { transform: scale(1.05); }
+        .no-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #232128 0%, #111014 100%); color: var(--gold-dark); font-family: var(--font-serif); font-size: 14px; }
+        .char-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 50px 10px 15px; background: linear-gradient(to top, rgba(15,14,18,0.95) 0%, rgba(15,14,18,0.7) 40%, rgba(0,0,0,0) 100%); z-index: 2; text-align: center; box-sizing: border-box; }
+        .char-name { font-family: var(--font-serif); color: var(--gold-light); font-size: 19px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,1); }
+        #profile-view { display: none; animation: fadeIn 0.4s ease-out; }
+        .profile-split-container { display: flex; gap: 40px; margin-top: 20px; align-items: flex-start; }
+        .profile-left-panel { flex: 0 0 260px; display: flex; flex-direction: column; gap: 20px; position: sticky; top: 20px; }
+        .detail-card-frame { width: 100%; aspect-ratio: 2 / 3; border: 2px solid var(--gold-main); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.7); background: #111014; position: relative; }
+        .detail-card-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .status-dashboard { background: var(--inner-bg); border: 1px solid var(--gold-dark); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: inset 0 0 15px rgba(0,0,0,0.5); }
+        .status-item { color: var(--text-sub); display: flex; justify-content: space-between; font-size: 15px; border-bottom: 1px solid rgba(140,112,59,0.15); padding-bottom: 6px; }
+        .status-item b { color: var(--gold-main); font-size: 16px; font-family: var(--font-serif); }
+        .profile-right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+        .right-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold-dark); padding-bottom: 15px; position: sticky; top: 0px; z-index: 100; background: #1a191e; padding-top: 25px; margin-top: -25px; box-shadow: 0 15px 15px -15px rgba(0,0,0,0.9); }
+        .right-header h2 { font-family: var(--font-serif); color: var(--gold-light); margin: 0; font-size: 36px; text-shadow: 0 0 10px rgba(212,178,111,0.2); letter-spacing: 2px; }
+        .community-theme { line-height: 1.6; font-size: 15px; padding: 35px; background: var(--inner-bg); border-radius: 12px; border: 1px solid rgba(140, 112, 59, 0.2); min-height: 550px; box-shadow: inset 0 0 15px rgba(0,0,0,0.3); letter-spacing: 0.5px; box-sizing: border-box; overflow-x: hidden; color: var(--text-main); }
+        .community-theme * { font-family: var(--font-main) !important; }
+        .community-theme p { margin-top: 0; margin-bottom: 14px; word-break: keep-all; min-height: 1em; }
+        .community-theme strong, .community-theme b { color: var(--gold-light); font-weight: 600; }
+        .community-theme h1, .community-theme h2, .community-theme h3 { font-family: var(--font-serif) !important; color: var(--gold-main); border-bottom: 1px dashed rgba(140, 112, 59, 0.4); padding-bottom: 8px; margin-top: 35px; margin-bottom: 18px; letter-spacing: 1px; font-size: 1.5em; }
+        .community-theme table { width: 100% !important; border-collapse: collapse; margin: 25px 0; table-layout: fixed; background: rgba(0, 0, 0, 0.2); }
+        .community-theme td, .community-theme th { border: 1px solid rgba(140, 112, 59, 0.3) !important; padding: 12px 14px; word-wrap: break-word; font-size: 14px; color: var(--text-main); }
+        .community-theme tr:first-child td, .community-theme tr:first-child th { background-color: rgba(212, 178, 111, 0.08) !important; color: var(--gold-light) !important; font-weight: bold; font-family: var(--font-serif) !important; }
+        .community-theme a { color: #79b3ec !important; text-decoration: none; border-bottom: 1px dashed #79b3ec; }
+        .community-theme img { max-width: 100% !important; height: auto !important; border-radius: 8px; display: block; margin: 15px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div id="list-view">
+            <h1 class="view-title">CHARACTER SELECT</h1>
+            <div class="char-grid" id="charGrid">
+                <p style="text-align: center; color: var(--text-sub); grid-column: 1/-1;">데이터 동기화 중...</p>
+            </div>
+        </div>
+        <div id="profile-view">
+            <div class="profile-split-container">
+                <div class="profile-left-panel">
+                    <div class="detail-card-frame" id="p-card-frame"></div>
+                    <div class="status-dashboard">
+                        <div class="status-item"><span>체력</span><b id="p-hp">-</b></div>
+                        <div class="status-item"><span>힘</span><b id="p-str">-</b></div>
+                        <div class="status-item"><span>민첩</span><b id="p-agi">-</b></div>
+                        <div class="status-item"><span>운</span><b id="p-luk">-</b></div>
+                    </div>
+                </div>
+                <div class="profile-right-panel">
+                    <div class="right-header">
+                        <h2 id="profile-name">Name</h2>
+                        <button class="btn-gold" onclick="backToList()">CLOSE</button>
+                    </div>
+                    <div id="profile-doc-container" class="community-theme"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const PROFILE_GAS_URL = "https://script.google.com/macros/s/AKfycbxKSsN3D86XzXPVqdNNpSbjU87y7uhgpg4DH-RKlVpLm6Xfo5DCPKw5yFsWjpACqNbUlw/exec";
+        let characterCache = {};
+        function getDirectImgUrl(url) {
+            if (!url) return '';
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9-_]+)/) || url.match(/id=([a-zA-Z0-9-_]+)/);
+            if (driveMatch) return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+            return url;
+        }
+        function isColorful(colorStr) {
+            if (!colorStr) return false;
+            let c = colorStr.toLowerCase().replace(/\s/g, '');
+            if (c === 'transparent' || c === 'inherit') return false;
+            let r = 0, g = 0, b = 0;
+            if (c.startsWith('rgb')) {
+                let match = c.match(/rgba?\((\d+),(\d+),(\d+)/);
+                if (match) { r = parseInt(match[1]); g = parseInt(match[2]); b = parseInt(match[3]); }
+            } else if (c.startsWith('#')) {
+                let hex = c.substring(1);
+                if (hex.length === 3) { r = parseInt(hex[0]+hex[0], 16); g = parseInt(hex[1]+hex[1], 16); b = parseInt(hex[2]+hex[2], 16); }
+                else if (hex.length >= 6) { r = parseInt(hex.substring(0,2), 16); g = parseInt(hex.substring(2,4), 16); b = parseInt(hex.substring(4,6), 16); }
+            }
+            let max = Math.max(r, g, b);
+            let min = Math.min(r, g, b);
+            return (max - min > 30);
+        }
+        window.addEventListener('popstate', function(event) {
+            if (window.location.hash !== '#profile') {
+                if (document.getElementById('profile-view').style.display === 'block') {
+                    document.getElementById('profile-view').style.display = 'none';
+                    document.getElementById('list-view').style.display = 'block';
+                }
+            }
+        });
+        window.onload = async function() {
+            const gridContainer = document.getElementById('charGrid');
+            try {
+                const response = await fetch(`${PROFILE_GAS_URL}?action=list`, { redirect: 'follow' });
+                const data = await response.json();
+                if (data.success && data.list.length > 0) {
+                    gridContainer.innerHTML = '';
+                    let renderedNpcHeader = false;
+                    let renderedPlayerHeader = false;
+                    data.list.forEach(char => {
+                        characterCache[char.name] = char;
+                        if (char.isNpc && !renderedNpcHeader) {
+                            gridContainer.innerHTML += `<div class="grid-divider">NPC</div>`;
+                            renderedNpcHeader = true;
+                        }
+                        if (!char.isNpc && !renderedPlayerHeader) {
+                            gridContainer.innerHTML += `<div class="grid-divider">PLAYERS</div>`;
+                            renderedPlayerHeader = true;
+                        }
+                        const directImg = getDirectImgUrl(char.img);
+                        const imgTag = directImg ? `<img src="${directImg}" alt="${char.name}">` : `<div class="no-img-placeholder">NO IMAGE</div>`;
+                        gridContainer.innerHTML += `
+                            <div class="char-card" data-name="${char.name}" onclick="openProfile(this.getAttribute('data-name'))">
+                                ${imgTag}
+                                <div class="char-info"><div class="char-name">${char.name}</div></div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    gridContainer.innerHTML = "<p style='color:#ff6b6b; grid-column:1/-1;'>시트에 데이터가 없거나 비어있습니다.</p>";
+                }
+            } catch (error) {
+                gridContainer.innerHTML = "<p style='color:#ff6b6b; grid-column:1/-1;'>통신 실패: 구글 스크립트 배포 상태와 URL을 확인하세요.</p>";
+            }
+        };
+        async function openProfile(name) {
+            document.getElementById('list-view').style.display = 'none';
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-name').innerText = name;
+            history.pushState({ view: 'profile' }, '', '#profile');
+            const cachedData = characterCache[name] || { hp:0, str:0, agi:0, luk:0, img:'' };
+            document.getElementById('p-hp').innerText = cachedData.hp;
+            document.getElementById('p-str').innerText = cachedData.str;
+            document.getElementById('p-agi').innerText = cachedData.agi;
+            document.getElementById('p-luk').innerText = cachedData.luk;
+            const directImg = getDirectImgUrl(cachedData.img);
+            document.getElementById('p-card-frame').innerHTML = directImg
+                ? `<img src="${directImg}" alt="${name}">`
+                : `<div class="no-img-placeholder">NO IMAGE</div>`;
+            document.getElementById('profile-doc-container').innerHTML = "<p style='text-align:center; color: var(--text-sub);'>구성 중...</p>";
+            try {
+                const response = await fetch(`${PROFILE_GAS_URL}?action=detail&name=${encodeURIComponent(name)}`, { redirect: 'follow' });
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById('profile-doc-container').innerHTML = `<p style="color:#ff6b6b; text-align:center; padding-top:50px;">${data.error}</p>`;
+                } else if (data.success) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data.html, 'text/html');
+                    const styleMap = {};
+                    doc.querySelectorAll('style').forEach(styleTag => {
+                        const cssText = styleTag.innerHTML;
+                        const classBlockRegex = /\.([a-zA-Z0-9_-]+)\s*\{([^}]+)\}/gi;
+                        let blockMatch;
+                        while ((blockMatch = classBlockRegex.exec(cssText)) !== null) {
+                            let className = blockMatch[1];
+                            let rules = blockMatch[2];
+                            if (!styleMap[className]) styleMap[className] = {};
+                            let alignMatch = rules.match(/text-align:\s*(center|right|justify)/i);
+                            if (alignMatch) styleMap[className].textAlign = alignMatch[1];
+                            if (/font-weight:\s*(700|bold)/i.test(rules)) styleMap[className].fontWeight = 'bold';
+                            let bgMatch = rules.match(/background(?:-color)?:\s*([^;}!]+)/i);
+                            if (bgMatch) {
+                                let color = bgMatch[1].trim().toLowerCase();
+                                if (color !== '#ffffff' && color !== '#fff' && color !== 'transparent' && !color.includes('255, 255, 255')) styleMap[className].isHighlight = true;
+                            }
+                            let colorMatch = rules.match(/(?:^|[;\s])color:\s*([^;}!]+)/i);
+                            if (colorMatch) {
+                                let color = colorMatch[1].trim();
+                                if (isColorful(color)) styleMap[className].isPointColor = true;
+                            }
+                        }
+                    });
+                    doc.querySelectorAll('body *').forEach(el => {
+                        let align = el.style.textAlign;
+                        let bold = (el.style.fontWeight === '700' || el.style.fontWeight === 'bold') ? 'bold' : '';
+                        let isHighlight = false;
+                        let isPointColor = false;
+                        let inlineBg = el.style.backgroundColor ? el.style.backgroundColor.toLowerCase() : '';
+                        if (inlineBg && inlineBg !== 'transparent' && inlineBg !== 'rgb(255, 255, 255)' && inlineBg !== '#ffffff') isHighlight = true;
+                        if (el.style.color && isColorful(el.style.color)) isPointColor = true;
+                        el.classList.forEach(cls => {
+                            if (styleMap[cls]) {
+                                if (styleMap[cls].textAlign) align = styleMap[cls].textAlign;
+                                if (styleMap[cls].fontWeight) bold = styleMap[cls].fontWeight;
+                                if (styleMap[cls].isHighlight) isHighlight = true;
+                                if (styleMap[cls].isPointColor) isPointColor = true;
+                            }
+                        });
+                        el.removeAttribute('style');
+                        el.removeAttribute('class');
+                        if (align) el.style.textAlign = align;
+                        if (bold) el.style.fontWeight = bold;
+                        if (isHighlight) {
+                            el.style.backgroundColor = 'var(--highlight-bg)';
+                            if (el.tagName.toLowerCase() === 'span') {
+                                el.style.padding = '2px 6px';
+                                el.style.borderRadius = '4px';
+                                el.style.color = isPointColor ? 'var(--point-color)' : 'var(--gold-light)';
+                                if (isPointColor) el.style.fontWeight = 'bold';
+                            }
+                        } else if (isPointColor) {
+                            el.style.color = 'var(--point-color)';
+                            el.style.fontWeight = 'bold';
+                        }
+                    });
+                    document.getElementById('profile-doc-container').innerHTML = doc.body.innerHTML;
+                }
+            } catch (error) {
+                document.getElementById('profile-doc-container').innerHTML = "<p style='text-align:center; color:#ff6b6b; padding-top:50px;'>서버 연결에 실패했습니다.</p>";
+            }
+        }
+        function backToList() {
+            if (window.location.hash === '#profile') history.back();
+            else {
+                document.getElementById('profile-view').style.display = 'none';
+                document.getElementById('list-view').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
