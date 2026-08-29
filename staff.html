@@ -104,7 +104,9 @@
         .option-label input { cursor: pointer; accent-color: var(--gold-main); }
 
         .staff-site-header.site-header { position: fixed; top: 0; background: var(--night); z-index: 300; }
-        @media(max-width:760px) { .staff-site-header.site-header { height: 79px; } }
+        body { box-sizing: border-box; padding-top: 105px; }
+        .game-container { height: min(90vh, 800px); max-height: calc(100vh - 125px); }
+        @media(max-width:760px) { .staff-site-header.site-header { height: 79px; } body { padding-top: 79px; } .game-container { height: calc(100vh - 96px); max-height: none; } }
     </style>
 </head>
 <body>
@@ -354,7 +356,8 @@
 </div>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzEO9cbWDMh6I1cf85nWjOn1psqYohENUWihxbmVGs26yTeSliKYHHo7ljJl0aW3D4L/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbwIHN-h472oc3QL5KaX_mbMWQ7nE2tzvLLp2tx5bA6piw6sQtIMArCk5pSw1kRlR_dSMQ/exec";
+    const STAFF_LOBBY_PASSWORD_KEY = 'theobroma_staff_lobby_password';
 
     let playerData = null;
     let systemData = null; 
@@ -430,6 +433,12 @@
         document.getElementById('login-pw').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') attemptLogin();
         });
+        let savedPassword = '';
+        try { savedPassword = localStorage.getItem(STAFF_LOBBY_PASSWORD_KEY) || ''; } catch (_) {}
+        if (savedPassword) {
+            document.getElementById('login-pw').value = savedPassword;
+            attemptLogin();
+        }
     };
 
     function nav(viewId, title = '') {
@@ -573,6 +582,7 @@
             if (!res) return;
 
             if (res.success) {
+                try { localStorage.setItem(STAFF_LOBBY_PASSWORD_KEY, pw); } catch (_) {}
                 playerData = res.charData;
                 systemData = res.systemData; 
                 document.getElementById('top-bar').style.display = 'flex';
