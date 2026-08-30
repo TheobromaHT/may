@@ -65,10 +65,6 @@ async function openGuestProfile(name) {
   guestProfileView.hidden = false;
   document.querySelector('#guest-profile-name').textContent = guest.name || '이름 미등록';
   document.querySelector('#guest-profile-type').textContent = guest.isNpc ? 'HOTEL RECORD / NPC' : 'THEOBROMA / STAFF RECORD';
-  document.querySelector('#guest-hp').textContent = guest.hp ?? '-';
-  document.querySelector('#guest-str').textContent = guest.str ?? '-';
-  document.querySelector('#guest-agi').textContent = guest.agi ?? '-';
-  document.querySelector('#guest-luk').textContent = guest.luk ?? '-';
   setProfilePortrait(guest);
   const documentPanel = document.querySelector('#guest-profile-document');
   documentPanel.innerHTML = '<p class="guest-document-loading">기록을 불러오는 중입니다.</p>';
