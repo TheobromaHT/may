@@ -49,6 +49,6 @@ function applyManagedContent() {
 }
 
 const contentScript = document.createElement('script');
-contentScript.src = 'site-content.js';
+contentScript.src = `site-content.js?v=${Date.now()}`;
 contentScript.addEventListener('load', applyManagedContent);
 document.head.append(contentScript);
