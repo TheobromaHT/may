@@ -13,8 +13,7 @@ if (nav) {
     <a href="world.html">세계관</a>
     <a href="character-guide.html">캐릭터 가이드</a>
     <a href="system.html">시스템</a>
-    <a href="guests.html">투숙객</a>
-    <a href="staff.html">직원</a>
+    <a href="guests.html">직원</a>
   `;
 }
 
@@ -38,8 +37,7 @@ function setManagedText(element, value) {
 
 function applyManagedContent() {
   const fileName = currentFile;
-  const pageKey = fileName === 'staff-profile.html' && location.search ? `${fileName}${location.search}` : fileName;
-  const pageContent = window.THEOBROMA_CONTENT?.[pageKey] || window.THEOBROMA_CONTENT?.[fileName];
+  const pageContent = window.THEOBROMA_CONTENT?.[fileName];
   if (!pageContent) return;
 
   Object.entries(pageContent).forEach(([selector, content]) => {
@@ -47,12 +45,6 @@ function applyManagedContent() {
     if (!element || !content) return;
     if (typeof content.text === 'string') setManagedText(element, content.text);
     if (typeof content.href === 'string' && content.href.trim()) element.setAttribute('href', content.href.trim());
-  });
-}
-
-if ((location.pathname.split('/').pop() || '') === 'staff.html') {
-  document.querySelectorAll('.staff-grid > a').forEach((link, index) => {
-    link.href = `staff-profile.html?id=${index + 1}`;
   });
 }
 
