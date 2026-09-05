@@ -42,6 +42,7 @@
 
 /* Improved readability for navigation, labels, and supporting copy. */
 .brand-name{font-size:16px}.brand-sub{font-size:9px}.desktop-nav a,.header-cta,footer a,.text-link{font-size:14px}.eyebrow,.section-label,.chapter-kicker{font-size:12px}.hero-bottom,.reservation-intro,.card-label,.sub-nav{font-size:11px}.field small{font-size:11px}.reserve-button{font-size:12px}.journal-list span,.journal-list time{font-size:11px}footer p{font-size:11px}footer>div a{font-size:11px}.content-placeholder{font-size:11px}.directory-grid>a>span,.system-grid article>span{font-size:11px}.quick-links a{font-size:12px}.hero-copy,.intro-copy>p,.lore-grid p,.chapter div>p:last-child,.notice-list div>p:last-child,.contact-panel>p:not(.section-label),.directory-grid p{font-size:14px}
+@media(min-width:761px){.reservation-grid{justify-content:flex-end}.reservation-grid .reservation-field,.reservation-grid .application-field{flex:0 0 185px;margin-left:0}}
 @media(min-width:761px){.hero h1,.intro-copy h2,.visit-section h2,.sub-hero h1{font-size:clamp(48px,6vw,88px)}.card-title{font-size:36px}.chapter h2,.rules-panel h2,.notice-list h2,.contact-panel h2{font-size:39px}.directory-grid h2{font-size:25px}}
 
 /* Keep supporting copy intact; tighten only the top navigation. */
