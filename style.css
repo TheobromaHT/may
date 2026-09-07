@@ -61,10 +61,11 @@
 @media(max-width:760px){.staff-directory-link{min-height:100px;padding:20px 22px}.staff-directory-link strong{font-size:21px}}
 
 @media(min-width:761px){.reservation-grid{display:grid;grid-template-columns:repeat(2,230px);gap:20px 24px;justify-content:end}.reservation-grid .field{flex-basis:auto}}
+@media(min-width:1400px){.reservation-grid{grid-template-columns:repeat(4,210px);gap:24px}}
 
-@media(min-width:761px){.reservation-intro{align-self:center;padding-top:0}}
+@media(min-width:761px){.reservation-intro{align-self:flex-end;padding-top:0}}
 
-@media(min-width:761px){.hero{height:min(620px,68vh);min-height:500px}}
+@media(min-width:761px){.hero{height:calc(100vh - 220px);min-height:500px;max-height:none}}
 
 /* Keep breathing room between the hero title and the application link. */
 .hero-content .text-link{margin-top:38px}
