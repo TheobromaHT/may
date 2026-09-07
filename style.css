@@ -47,3 +47,14 @@
 
 /* Keep supporting copy intact; tighten only the top navigation. */
 .desktop-nav a,.header-cta{font-size:12px}
+
+/* Keep breathing room between the hero title and the application link. */
+.hero-content .text-link{margin-top:38px}
+
+/* Direct links for community questions and chat. */
+.quote-section{background:#b29461;color:#172229;padding:86px 20px}
+.community-link-buttons{display:flex;justify-content:center;gap:16px;position:relative}
+.community-link-button{min-width:220px;display:flex;align-items:center;justify-content:space-between;border:0;border-bottom:1px solid rgba(58,42,28,.65);background:transparent;color:#3a2a1c;padding:8px 2px 12px;font:400 16px 'Noto Serif KR',serif;letter-spacing:0;text-decoration:none;cursor:pointer;transition:padding .2s,opacity .2s}
+.community-link-button:hover{padding-left:8px;opacity:.76}
+.community-link-button span{margin-left:12px;font-size:16px}
+@media(max-width:760px){.community-link-buttons{display:grid;gap:12px}.community-link-button{min-width:0;width:100%}}
