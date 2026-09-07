@@ -48,6 +48,18 @@
 /* Keep supporting copy intact; tighten only the top navigation. */
 .desktop-nav a,.header-cta{font-size:12px}
 
+.reservation .field{min-height:68px;padding-bottom:15px}
+.reservation .field small{font-size:12px}
+.reservation .field strong{font-size:16px}
+@media(min-width:761px){.reservation-grid .reservation-field,.reservation-grid .application-field{flex-basis:230px}}
+
+.staff-directory-link{display:flex;align-items:center;justify-content:space-between;min-height:122px;padding:25px 32px;background:#1a272e;color:#f4efe5;text-decoration:none;border:1px solid rgba(234,229,218,.22);transition:background .2s,padding .2s}
+.staff-directory-link:hover{background:#25363e;padding-left:40px}
+.staff-directory-link small{display:block;margin-bottom:10px;color:#c9ad78;font:400 11px 'DM Mono',monospace;letter-spacing:.14em}
+.staff-directory-link strong{font:500 28px 'Noto Serif KR',serif}
+.staff-directory-link i{font:400 28px 'DM Mono',monospace;color:#c9ad78;font-style:normal}
+@media(max-width:760px){.staff-directory-link{min-height:100px;padding:20px 22px}.staff-directory-link strong{font-size:21px}}
+
 /* Keep breathing room between the hero title and the application link. */
 .hero-content .text-link{margin-top:38px}
 
