@@ -62,9 +62,6 @@
 @media(max-width:760px){.staff-directory-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.staff-directory-link{min-height:100px;padding:17px 14px}.staff-directory-link small{font-size:8px;letter-spacing:.08em}.staff-directory-link strong{font-size:16px}.staff-directory-link i{font-size:19px}}
 
 @media(min-width:761px){.reservation-grid{display:grid;grid-template-columns:repeat(2,230px);gap:20px 24px;justify-content:end}.reservation-grid .field{flex-basis:auto}}
-@media(min-width:1400px){.reservation-grid{grid-template-columns:repeat(4,210px);gap:24px}}
-@media(min-width:1400px){.hero{height:calc(100vh - 132px)}}
-
 @media(min-width:761px){.reservation-intro{align-self:flex-end;padding-top:0}}
 
 @media(min-width:761px){.hero{height:calc(100vh - 220px);min-height:500px;max-height:none}}
