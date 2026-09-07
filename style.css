@@ -51,6 +51,15 @@
 /* Keep breathing room between the hero title and the application link. */
 .hero-content .text-link{margin-top:38px}
 
+.staff-coming-soon{margin:80px 0 140px;color:#cbbd9d;text-align:center;font:400 18px 'Noto Serif KR',serif;letter-spacing:.06em}
+
+.system-choice-card{display:block;min-height:280px;padding:27px;border:1px solid rgba(234,229,218,.25);color:#eee9de;text-decoration:none;transition:transform .25s,background .25s}
+.system-choice-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.06)}
+.system-choice-card>span{font:400 11px 'DM Mono',monospace;color:#c9ad78}
+.system-choice-card h2{font:500 29px 'Playfair Display',serif;margin:45px 0 20px}
+.system-choice-card p{margin:0;color:#c8c9c3;font:400 12px 'DM Mono',monospace;letter-spacing:.08em}
+.system-choice-card i{float:right;font-size:18px;font-style:normal;color:#c9ad78}
+
 /* Direct links for community questions and chat. */
 .quote-section{background:#b29461;color:#172229;padding:86px 20px}
 .community-link-buttons{display:flex;justify-content:center;gap:16px;position:relative}
