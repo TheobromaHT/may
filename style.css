@@ -85,3 +85,6 @@
 .community-link-button:hover{padding-left:8px;opacity:.76}
 .community-link-button span{margin-left:12px;font-size:16px}
 @media(max-width:760px){.community-link-buttons{display:grid;gap:12px}.community-link-button{min-width:0;width:100%}}
+
+/* One-row application links on wide desktop screens. */
+@media(min-width:1400px){.reservation-grid{grid-template-columns:repeat(4,210px);gap:24px}.hero{height:calc(100vh - 132px)}}
